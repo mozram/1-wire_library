@@ -41,5 +41,5 @@ void init_timer( void )
   second = 0;
   prescaler = 0;
 
-  TIMSK = 1<<OCIE1A;
+  TIMSK1 = 1<<OCIE1A;
 }

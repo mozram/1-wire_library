@@ -4,7 +4,7 @@
 #define SKIP_ROM	0xCC
 #define	SEARCH_ROM	0xF0
 
-#define CONVERT_T	0x44		// DS1820 commands
+#define CONVERT_T	0x44		// DS28E05 commands
 #define READ		0xBE
 #define WRITE		0x4E
 #define EE_WRITE	0x48

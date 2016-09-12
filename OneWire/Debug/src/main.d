@@ -26,7 +26,15 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/common/boards/board.h \
  ../src/ASF/mega/boards/atmega256rfr2_xplained_pro/atmega256rfr2_xplained_pro.h \
  ../src/ASF/mega/boards/atmega256rfr2_xplained_pro/led.h \
- ../src/ASF/mega/utils/status_codes.h
+ ../src/ASF/mega/utils/status_codes.h ../src/main.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\signal.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stdarg.h \
+ ../src/1wire.h ../src/delay.h ../src/tempmeas.h ../src/timebase.h \
+ ../src/uart.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h
 
 ../src/asf.h:
 
@@ -87,3 +95,27 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/ASF/mega/boards/atmega256rfr2_xplained_pro/led.h:
 
 ../src/ASF/mega/utils/status_codes.h:
+
+../src/main.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\signal.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stdarg.h:
+
+../src/1wire.h:
+
+../src/delay.h:
+
+../src/tempmeas.h:
+
+../src/timebase.h:
+
+../src/uart.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h:

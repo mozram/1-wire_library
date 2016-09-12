@@ -7,13 +7,14 @@
 /*                                                                      */
 /************************************************************************/
 #include "main.h"
+#include <util/delay.h>
 
 
 #ifndef W1_PIN
-#define W1_PIN	PD6
-#define W1_IN	PIND
-#define W1_OUT	PORTD
-#define W1_DDR	DDRD
+#define W1_PIN	PE5
+#define W1_IN	PINE
+#define W1_OUT	PORTE
+#define W1_DDR	DDRE
 #endif
 
 
@@ -21,16 +22,19 @@ bit w1_reset(void)
 {
   bit err;
 
-  W1_OUT &= ~(1<<W1_PIN);
-  W1_DDR |= 1<<W1_PIN;
-  DELAY( DELAY_US( 480 ));			// 480 us
+  W1_OUT &= ~(1<<W1_PIN); //drive bus low
+  W1_DDR |= 1<<W1_PIN; // set pin as output
+  _delay_us(50); // reset time low
+  //DELAY( DELAY_US( 480 ));			// 480 us
   cli();
-  W1_DDR &= ~(1<<W1_PIN);
-  DELAY( DELAY_US( 66 ));
+  W1_DDR &= ~(1<<W1_PIN); //set pin as input. Release bus
+  _delay_us(8); // time slot duration 8 us
+  //DELAY( DELAY_US( 66 ));
   err = W1_IN & (1<<W1_PIN);			// no presence detect
-  sei();
-  DELAY( DELAY_US( 480 - 66 ));
-  if( (W1_IN & (1<<W1_PIN)) == 0 )		// short circuit
+  Enable_global_interrupt();
+  _delay_us(480-66);
+  //DELAY( DELAY_US( 480 - 66 ));
+  if( (W1_IN & (1<<W1_PIN)) == 0 )		// check for short circuit
     err = 1;
   return err;
 }
@@ -48,7 +52,7 @@ uchar w1_bit_io( bit b )
     b = 0;
   DELAY( DELAY_US( 60 - 15 ));
   W1_DDR &= ~(1<<W1_PIN);
-  sei();
+  Enable_global_interrupt();
   return b;
 }
 

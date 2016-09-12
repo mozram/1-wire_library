@@ -61,5 +61,5 @@ void board_init(void)
 	ioport_configure_pin(GPIO_PUSH_BUTTON_ON_BOARD,	
 	IOPORT_DIR_INPUT | IOPORT_PULL_UP);
 
-	ioport_configure_pin(IOPORT_CREATE_PIN(PORTE, 5), IOPORT_DIR_OUTPUT | (1<<1));
+	//ioport_configure_pin(IOPORT_CREATE_PIN(PORTE, 5), IOPORT_DIR_OUTPUT | (1<<1));
 }

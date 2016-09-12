@@ -8,17 +8,17 @@
 /************************************************************************/
 #ifndef _main_h_
 #define _main_h_
-#include <io.h>
+#include <avr/io.h>
 #include <interrupt.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 //#define	XTAL		11059200L
-#define XTAL		5000000L
-
-#define	BAUD	19200
-#define bauddivider (uint)(1.0 * XTAL / BAUD / 16 - 0.5)
+#define XTAL		8000000L
+#define F_CPU	8000000L //for delay 
+#define	BAUD	9600
+#define bauddivider (uint32_t)((XTAL / BAUD / 16) - 1)
 
 
 #define uchar unsigned char
@@ -28,10 +28,10 @@
 #define code
 
 
-#define W1_PIN	PD6
-#define W1_IN	PIND
-#define W1_OUT	PORTD
-#define W1_DDR	DDRD
+#define W1_PIN	PE5
+#define W1_IN	PINE
+#define W1_OUT	PORTE
+#define W1_DDR	DDRE
 
 #include "1wire.h"
 #include "delay.h"
