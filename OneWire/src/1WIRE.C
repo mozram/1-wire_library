@@ -1,9 +1,11 @@
 /************************************************************************/
-/*									*/
-/*			Access Dallas 1-Wire Devices			*/
+/*																		*/
+/*			Access Dallas 1-Wire Devices								*/
 /*                                                                      */
 /*              Author: Peter Dannegger                                 */
 /*                      danni@specs.de                                  */
+/*			Modified for DS28E05 by: Zulhilmi Ramli						*/
+/*						soul@outlook.my									*/
 /*                                                                      */
 /************************************************************************/
 #include "main.h"
@@ -15,6 +17,16 @@
 #define W1_IN	PINE
 #define W1_OUT	PORTE
 #define W1_DDR	DDRE
+
+#define tRSTL	50
+#define tRSTH	80
+#define tMSP	8
+#define tMSR	1
+#define tW0L	8
+#define tW1L	1
+#define tRL		1
+#define tSLOT	13
+#define tREC	6
 #endif
 
 
@@ -24,11 +36,11 @@ bit w1_reset(void)
 
   W1_OUT &= ~(1<<W1_PIN); //drive bus low
   W1_DDR |= 1<<W1_PIN; // set pin as output
-  _delay_us(50); // reset time low
+  _delay_us(tRSTL); // reset time low
   //DELAY( DELAY_US( 480 ));			// 480 us
   cli();
   W1_DDR &= ~(1<<W1_PIN); //set pin as input. Release bus
-  _delay_us(8); // time slot duration 8 us
+  _delay_us(tMSP); // time slot duration 8 us
   //DELAY( DELAY_US( 66 ));
   err = W1_IN & (1<<W1_PIN);			// no presence detect
   Enable_global_interrupt();
@@ -43,14 +55,17 @@ bit w1_reset(void)
 uchar w1_bit_io( bit b )
 {
   cli();
-  W1_DDR |= 1<<W1_PIN;
-  DELAY( DELAY_US( 1 ));
+  W1_DDR |= 1<<W1_PIN; //set pin as output
+  _delay_us(1);
+  //DELAY( DELAY_US( 1 ));
   if( b )
     W1_DDR &= ~(1<<W1_PIN);
-  DELAY( DELAY_US( 15 - 1 ));
+  _delay_us(tMSR);
+  //DELAY( DELAY_US( 15 - 1 ));
   if( (W1_IN & (1<<W1_PIN)) == 0 )
     b = 0;
-  DELAY( DELAY_US( 60 - 15 ));
+  _delay_us(tSLOT - 1 - tMSR);
+  //DELAY( DELAY_US( 60 - 15 ));
   W1_DDR &= ~(1<<W1_PIN);
   Enable_global_interrupt();
   return b;
@@ -129,4 +144,13 @@ void w1_command( uchar command, uchar idata *id )
     w1_byte_wr( SKIP_ROM );			// to all devices
   }
   w1_byte_wr( command );
+}
+
+void w1_read_rom(uint8_t *uid)
+{
+	w1_reset();
+	w1_byte_wr(READ_ROM);
+	for(uint i = 0; i < 8; i++){
+		uid[i] = w1_byte_rd();
+	}
 }

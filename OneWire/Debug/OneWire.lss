@@ -3,31 +3,31 @@ OneWire.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000070  00800200  000002fc  00000370  2**0
+  0 .data         00000070  00800200  00000450  000004c4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000002fc  00000000  00000000  00000074  2**1
+  1 .text         00000450  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000003e0  2**0
+  2 .comment      00000030  00000000  00000000  00000534  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000410  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000564  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 000000c0  00000000  00000000  00000450  2**0
+  4 .debug_aranges 000000c8  00000000  00000000  000005a4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000ea0  00000000  00000000  00000510  2**0
+  5 .debug_info   00001200  00000000  00000000  0000066c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000617  00000000  00000000  000013b0  2**0
+  6 .debug_abbrev 0000062b  00000000  00000000  0000186c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00001449  00000000  00000000  000019c7  2**0
+  7 .debug_line   000014ab  00000000  00000000  00001e97  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000170  00000000  00000000  00002e10  2**2
+  8 .debug_frame  0000019c  00000000  00000000  00003344  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00016b81  00000000  00000000  00002f80  2**0
+  9 .debug_str    00016c1f  00000000  00000000  000034e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000516  00000000  00000000  00019b01  2**0
+ 10 .debug_loc    000005e2  00000000  00000000  0001a0ff  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000080  00000000  00000000  0001a017  2**0
+ 11 .debug_ranges 00000088  00000000  00000000  0001a6e1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  00006833  00000000  00000000  0001a097  2**0
+ 12 .debug_macro  0000686f  00000000  00000000  0001a769  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -202,8 +202,8 @@ Disassembly of section .text:
  144:	12 e0       	ldi	r17, 0x02	; 2
  146:	a0 e0       	ldi	r26, 0x00	; 0
  148:	b2 e0       	ldi	r27, 0x02	; 2
- 14a:	ec ef       	ldi	r30, 0xFC	; 252
- 14c:	f2 e0       	ldi	r31, 0x02	; 2
+ 14a:	e0 e5       	ldi	r30, 0x50	; 80
+ 14c:	f4 e0       	ldi	r31, 0x04	; 4
  14e:	00 e0       	ldi	r16, 0x00	; 0
  150:	0b bf       	out	0x3b, r16	; 59
  152:	02 c0       	rjmp	.+4      	; 0x158 <__do_copy_data+0x14>
@@ -226,47 +226,32 @@ Disassembly of section .text:
  168:	a0 37       	cpi	r26, 0x70	; 112
  16a:	b2 07       	cpc	r27, r18
  16c:	e1 f7       	brne	.-8      	; 0x166 <.do_clear_bss_loop>
- 16e:	49 d0       	rcall	.+146    	; 0x202 <main>
- 170:	c3 c0       	rjmp	.+390    	; 0x2f8 <_exit>
+ 16e:	87 d0       	rcall	.+270    	; 0x27e <main>
+ 170:	6d c1       	rjmp	.+730    	; 0x44c <_exit>
 
 00000172 <__bad_interrupt>:
  172:	46 cf       	rjmp	.-372    	; 0x0 <__vectors>
 
 00000174 <w1_reset>:
-
-bit w1_reset(void)
-{
-  bit err;
-
-  W1_OUT &= ~(1<<W1_PIN); //drive bus low
+    }while( --i );
+  }else{
+    w1_byte_wr( SKIP_ROM );			// to all devices
+  }
+  w1_byte_wr( command );
+}
  174:	75 98       	cbi	0x0e, 5	; 14
-  W1_DDR |= 1<<W1_PIN; // set pin as output
  176:	6d 9a       	sbi	0x0d, 5	; 13
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
-
-	__builtin_avr_delay_cycles(__ticks_dc);
  178:	85 e8       	ldi	r24, 0x85	; 133
  17a:	8a 95       	dec	r24
  17c:	f1 f7       	brne	.-4      	; 0x17a <w1_reset+0x6>
  17e:	00 00       	nop
-  _delay_us(50); // reset time low
-  //DELAY( DELAY_US( 480 ));			// 480 us
-  cli();
  180:	f8 94       	cli
-  W1_DDR &= ~(1<<W1_PIN); //set pin as input. Release bus
  182:	6d 98       	cbi	0x0d, 5	; 13
  184:	e5 e1       	ldi	r30, 0x15	; 21
  186:	ea 95       	dec	r30
  188:	f1 f7       	brne	.-4      	; 0x186 <w1_reset+0x12>
  18a:	00 00       	nop
-  _delay_us(8); // timeslot duration 8 us
-  //DELAY( DELAY_US( 66 ));
-  err = W1_IN & (1<<W1_PIN);			// no presence detect
  18c:	8c b1       	in	r24, 0x0c	; 12
-  Enable_global_interrupt();
  18e:	78 94       	sei
  190:	eb e3       	ldi	r30, 0x3B	; 59
  192:	f3 e0       	ldi	r31, 0x03	; 3
@@ -274,295 +259,252 @@ bit w1_reset(void)
  196:	f1 f7       	brne	.-4      	; 0x194 <w1_reset+0x20>
  198:	00 c0       	rjmp	.+0      	; 0x19a <w1_reset+0x26>
  19a:	00 00       	nop
-  _delay_us(480-66);
-  //DELAY( DELAY_US( 480 - 66 ));
-  if( (W1_IN & (1<<W1_PIN)) == 0 )		// short circuit
  19c:	65 9b       	sbis	0x0c, 5	; 12
  19e:	02 c0       	rjmp	.+4      	; 0x1a4 <w1_reset+0x30>
-  //DELAY( DELAY_US( 480 ));			// 480 us
-  cli();
-  W1_DDR &= ~(1<<W1_PIN); //set pin as input. Release bus
-  _delay_us(8); // timeslot duration 8 us
-  //DELAY( DELAY_US( 66 ));
-  err = W1_IN & (1<<W1_PIN);			// no presence detect
  1a0:	80 72       	andi	r24, 0x20	; 32
  1a2:	08 95       	ret
-  Enable_global_interrupt();
-  _delay_us(480-66);
-  //DELAY( DELAY_US( 480 - 66 ));
-  if( (W1_IN & (1<<W1_PIN)) == 0 )		// short circuit
-    err = 1;
  1a4:	81 e0       	ldi	r24, 0x01	; 1
-  return err;
-}
  1a6:	08 95       	ret
 
-000001a8 <uinit>:
+000001a8 <w1_bit_io>:
+ 1a8:	f8 94       	cli
+ 1aa:	6d 9a       	sbi	0x0d, 5	; 13
+ 1ac:	92 e0       	ldi	r25, 0x02	; 2
+ 1ae:	9a 95       	dec	r25
+ 1b0:	f1 f7       	brne	.-4      	; 0x1ae <w1_bit_io+0x6>
+ 1b2:	00 c0       	rjmp	.+0      	; 0x1b4 <w1_bit_io+0xc>
+ 1b4:	81 11       	cpse	r24, r1
+ 1b6:	6d 98       	cbi	0x0d, 5	; 13
+ 1b8:	92 e0       	ldi	r25, 0x02	; 2
+ 1ba:	9a 95       	dec	r25
+ 1bc:	f1 f7       	brne	.-4      	; 0x1ba <w1_bit_io+0x12>
+ 1be:	00 c0       	rjmp	.+0      	; 0x1c0 <w1_bit_io+0x18>
+ 1c0:	65 9b       	sbis	0x0c, 5	; 12
+ 1c2:	80 e0       	ldi	r24, 0x00	; 0
+ 1c4:	9d e1       	ldi	r25, 0x1D	; 29
+ 1c6:	9a 95       	dec	r25
+ 1c8:	f1 f7       	brne	.-4      	; 0x1c6 <w1_bit_io+0x1e>
+ 1ca:	00 00       	nop
+ 1cc:	6d 98       	cbi	0x0d, 5	; 13
+ 1ce:	78 94       	sei
+ 1d0:	08 95       	ret
+
+000001d2 <w1_byte_wr>:
+ 1d2:	cf 93       	push	r28
+ 1d4:	df 93       	push	r29
+ 1d6:	c8 2f       	mov	r28, r24
+ 1d8:	d8 e0       	ldi	r29, 0x08	; 8
+ 1da:	8c 2f       	mov	r24, r28
+ 1dc:	81 70       	andi	r24, 0x01	; 1
+ 1de:	e4 df       	rcall	.-56     	; 0x1a8 <w1_bit_io>
+ 1e0:	c6 95       	lsr	r28
+ 1e2:	81 11       	cpse	r24, r1
+ 1e4:	c0 68       	ori	r28, 0x80	; 128
+ 1e6:	d1 50       	subi	r29, 0x01	; 1
+ 1e8:	c1 f7       	brne	.-16     	; 0x1da <w1_byte_wr+0x8>
+ 1ea:	8c 2f       	mov	r24, r28
+ 1ec:	90 e0       	ldi	r25, 0x00	; 0
+ 1ee:	df 91       	pop	r29
+ 1f0:	cf 91       	pop	r28
+ 1f2:	08 95       	ret
+
+000001f4 <w1_byte_rd>:
+ 1f4:	8f ef       	ldi	r24, 0xFF	; 255
+ 1f6:	ed cf       	rjmp	.-38     	; 0x1d2 <w1_byte_wr>
+ 1f8:	08 95       	ret
+
+000001fa <w1_read_rom>:
+
+void w1_read_rom(uint8_t *uid)
+{
+ 1fa:	0f 93       	push	r16
+ 1fc:	1f 93       	push	r17
+ 1fe:	cf 93       	push	r28
+ 200:	df 93       	push	r29
+ 202:	8c 01       	movw	r16, r24
+	w1_reset();
+ 204:	b7 df       	rcall	.-146    	; 0x174 <w1_reset>
+	w1_byte_wr(READ_ROM);
+ 206:	83 e3       	ldi	r24, 0x33	; 51
+ 208:	e4 df       	rcall	.-56     	; 0x1d2 <w1_byte_wr>
+ 20a:	e8 01       	movw	r28, r16
+ 20c:	08 5f       	subi	r16, 0xF8	; 248
+ 20e:	1f 4f       	sbci	r17, 0xFF	; 255
+	for(uint i = 0; i < 8; i++){
+		uid[i] = w1_byte_rd();
+ 210:	f1 df       	rcall	.-30     	; 0x1f4 <w1_byte_rd>
+ 212:	89 93       	st	Y+, r24
+
+void w1_read_rom(uint8_t *uid)
+{
+	w1_reset();
+	w1_byte_wr(READ_ROM);
+	for(uint i = 0; i < 8; i++){
+ 214:	c0 17       	cp	r28, r16
+ 216:	d1 07       	cpc	r29, r17
+ 218:	d9 f7       	brne	.-10     	; 0x210 <w1_read_rom+0x16>
+		uid[i] = w1_byte_rd();
+	}
+ 21a:	df 91       	pop	r29
+ 21c:	cf 91       	pop	r28
+ 21e:	1f 91       	pop	r17
+ 220:	0f 91       	pop	r16
+ 222:	08 95       	ret
+
+00000224 <uinit>:
 #include "main.h"
 
 
 void uinit( void )
 {
   UBRR1L = bauddivider;			//set baud rate
- 1a8:	83 e3       	ldi	r24, 0x33	; 51
- 1aa:	80 93 cc 00 	sts	0x00CC, r24	; 0x8000cc <__TEXT_REGION_LENGTH__+0x7000cc>
+ 224:	83 e3       	ldi	r24, 0x33	; 51
+ 226:	80 93 cc 00 	sts	0x00CC, r24	; 0x8000cc <__TEXT_REGION_LENGTH__+0x7000cc>
   UBRR1H = bauddivider >> 8;
- 1ae:	10 92 cd 00 	sts	0x00CD, r1	; 0x8000cd <__TEXT_REGION_LENGTH__+0x7000cd>
+ 22a:	10 92 cd 00 	sts	0x00CD, r1	; 0x8000cd <__TEXT_REGION_LENGTH__+0x7000cd>
   UCSR1A = 0;				//no U2X, MPCM
- 1b2:	10 92 c8 00 	sts	0x00C8, r1	; 0x8000c8 <__TEXT_REGION_LENGTH__+0x7000c8>
+ 22e:	10 92 c8 00 	sts	0x00C8, r1	; 0x8000c8 <__TEXT_REGION_LENGTH__+0x7000c8>
   UCSR1C = (1<<USBS1)|(3<<UCSZ10);	//8 Bit
- 1b6:	8e e0       	ldi	r24, 0x0E	; 14
- 1b8:	80 93 ca 00 	sts	0x00CA, r24	; 0x8000ca <__TEXT_REGION_LENGTH__+0x7000ca>
+ 232:	8e e0       	ldi	r24, 0x0E	; 14
+ 234:	80 93 ca 00 	sts	0x00CA, r24	; 0x8000ca <__TEXT_REGION_LENGTH__+0x7000ca>
   UCSR1B = (1<<RXEN1)|(1<<TXEN1);
- 1bc:	88 e1       	ldi	r24, 0x18	; 24
- 1be:	80 93 c9 00 	sts	0x00C9, r24	; 0x8000c9 <__TEXT_REGION_LENGTH__+0x7000c9>
- 1c2:	08 95       	ret
+ 238:	88 e1       	ldi	r24, 0x18	; 24
+ 23a:	80 93 c9 00 	sts	0x00C9, r24	; 0x8000c9 <__TEXT_REGION_LENGTH__+0x7000c9>
+ 23e:	08 95       	ret
 
-000001c4 <uputchar>:
+00000240 <uputchar>:
 }
 
 
 void uputchar( char c )
 {
   while( (UCSR1A & 1<<UDRE1) == 0 );
- 1c4:	e8 ec       	ldi	r30, 0xC8	; 200
- 1c6:	f0 e0       	ldi	r31, 0x00	; 0
- 1c8:	90 81       	ld	r25, Z
- 1ca:	95 ff       	sbrs	r25, 5
- 1cc:	fd cf       	rjmp	.-6      	; 0x1c8 <uputchar+0x4>
+ 240:	e8 ec       	ldi	r30, 0xC8	; 200
+ 242:	f0 e0       	ldi	r31, 0x00	; 0
+ 244:	90 81       	ld	r25, Z
+ 246:	95 ff       	sbrs	r25, 5
+ 248:	fd cf       	rjmp	.-6      	; 0x244 <uputchar+0x4>
   UDR1 = c;
- 1ce:	80 93 ce 00 	sts	0x00CE, r24	; 0x8000ce <__TEXT_REGION_LENGTH__+0x7000ce>
- 1d2:	08 95       	ret
+ 24a:	80 93 ce 00 	sts	0x00CE, r24	; 0x8000ce <__TEXT_REGION_LENGTH__+0x7000ce>
+ 24e:	08 95       	ret
 
-000001d4 <uputs>:
+00000250 <uputs>:
 }
 
 
 void uputs( char *s )
 {
- 1d4:	cf 93       	push	r28
- 1d6:	df 93       	push	r29
- 1d8:	ec 01       	movw	r28, r24
+ 250:	cf 93       	push	r28
+ 252:	df 93       	push	r29
+ 254:	ec 01       	movw	r28, r24
   while( *s )
- 1da:	88 81       	ld	r24, Y
- 1dc:	88 23       	and	r24, r24
- 1de:	29 f0       	breq	.+10     	; 0x1ea <uputs+0x16>
- 1e0:	21 96       	adiw	r28, 0x01	; 1
+ 256:	88 81       	ld	r24, Y
+ 258:	88 23       	and	r24, r24
+ 25a:	29 f0       	breq	.+10     	; 0x266 <uputs+0x16>
+ 25c:	21 96       	adiw	r28, 0x01	; 1
     uputchar( *s++ );
- 1e2:	f0 df       	rcall	.-32     	; 0x1c4 <uputchar>
+ 25e:	f0 df       	rcall	.-32     	; 0x240 <uputchar>
 }
 
 
 void uputs( char *s )
 {
   while( *s )
- 1e4:	89 91       	ld	r24, Y+
- 1e6:	81 11       	cpse	r24, r1
- 1e8:	fc cf       	rjmp	.-8      	; 0x1e2 <uputs+0xe>
+ 260:	89 91       	ld	r24, Y+
+ 262:	81 11       	cpse	r24, r1
+ 264:	fc cf       	rjmp	.-8      	; 0x25e <uputs+0xe>
     uputchar( *s++ );
 }
- 1ea:	df 91       	pop	r29
- 1ec:	cf 91       	pop	r28
- 1ee:	08 95       	ret
+ 266:	df 91       	pop	r29
+ 268:	cf 91       	pop	r28
+ 26a:	08 95       	ret
 
-000001f0 <uputsnl>:
+0000026c <uputsnl>:
 
 
 void uputsnl( char *s )
 {
   uputs( s );
- 1f0:	f1 df       	rcall	.-30     	; 0x1d4 <uputs>
+ 26c:	f1 df       	rcall	.-30     	; 0x250 <uputs>
   uputchar( 0x0D );
- 1f2:	8d e0       	ldi	r24, 0x0D	; 13
- 1f4:	e7 cf       	rjmp	.-50     	; 0x1c4 <uputchar>
- 1f6:	08 95       	ret
+ 26e:	8d e0       	ldi	r24, 0x0D	; 13
+ 270:	e7 cf       	rjmp	.-50     	; 0x240 <uputchar>
+ 272:	08 95       	ret
 
-000001f8 <board_init>:
-		port_pin_flags_t flags)
-{
-	/* Select direction and initial pin state */
-	if (flags & IOPORT_DIR_OUTPUT) {
-		if (flags & IOPORT_INIT_HIGH) {
-			*((uint8_t *)port + 2) |= pin_mask;
- 1f8:	2c 9a       	sbi	0x05, 4	; 5
-		} else {
-			*((uint8_t *)port + 2) &= ~pin_mask;
-		}
+00000274 <board_init>:
+ 274:	2c 9a       	sbi	0x05, 4	; 5
+ 276:	24 9a       	sbi	0x04, 4	; 4
+ 278:	6c 98       	cbi	0x0d, 4	; 13
+ 27a:	74 9a       	sbi	0x0e, 4	; 14
+ 27c:	08 95       	ret
 
-		*((uint8_t *)port + 1) |= pin_mask;
- 1fa:	24 9a       	sbi	0x04, 4	; 4
-	} else {
-		*((uint8_t *)port + 1) &= ~pin_mask;
- 1fc:	6c 98       	cbi	0x0d, 4	; 13
-		if (flags & IOPORT_PULL_UP) {
-			*((uint8_t *)port + 2) |= pin_mask;
- 1fe:	74 9a       	sbi	0x0e, 4	; 14
- 200:	08 95       	ret
-
-00000202 <main>:
+0000027e <main>:
+#include <asf.h>
+#include "main.h"
+#include <util/delay.h>
 
 int main (void)
 {
+ 27e:	cf 93       	push	r28
+ 280:	df 93       	push	r29
+ 282:	cd b7       	in	r28, 0x3d	; 61
+ 284:	de b7       	in	r29, 0x3e	; 62
+ 286:	28 97       	sbiw	r28, 0x08	; 8
+ 288:	0f b6       	in	r0, 0x3f	; 63
+ 28a:	f8 94       	cli
+ 28c:	de bf       	out	0x3e, r29	; 62
+ 28e:	0f be       	out	0x3f, r0	; 63
+ 290:	cd bf       	out	0x3d, r28	; 61
 	/* Insert system clock initialization code here (sysclk_init()). */
 
 	board_init();
- 202:	fa df       	rcall	.-12     	; 0x1f8 <board_init>
+ 292:	f0 df       	rcall	.-32     	; 0x274 <board_init>
 
 	/* Insert application code here, after the board has been initialized. */
 
 	uinit();
- 204:	d1 df       	rcall	.-94     	; 0x1a8 <uinit>
+ 294:	c7 df       	rcall	.-114    	; 0x224 <uinit>
 	Enable_global_interrupt();
- 206:	78 94       	sei
+ 296:	78 94       	sei
 	uputsnl( "1-Wire-Reader:\r\n" );
- 208:	80 e0       	ldi	r24, 0x00	; 0
- 20a:	92 e0       	ldi	r25, 0x02	; 2
- 20c:	f1 df       	rcall	.-30     	; 0x1f0 <uputsnl>
+ 298:	80 e0       	ldi	r24, 0x00	; 0
+ 29a:	92 e0       	ldi	r25, 0x02	; 2
+ 29c:	e7 df       	rcall	.-50     	; 0x26c <uputsnl>
 
-	for(;;){				// main loop
+	uint8_t uid[8] = {0};
+ 29e:	ce 01       	movw	r24, r28
+ 2a0:	01 96       	adiw	r24, 0x01	; 1
+ 2a2:	28 e0       	ldi	r18, 0x08	; 8
+ 2a4:	fc 01       	movw	r30, r24
+ 2a6:	11 92       	st	Z+, r1
+ 2a8:	2a 95       	dec	r18
+ 2aa:	e9 f7       	brne	.-6      	; 0x2a6 <main+0x28>
 
-		bit err;
-		err = w1_reset();
- 20e:	b2 df       	rcall	.-156    	; 0x174 <w1_reset>
-// 		Enable_global_interrupt();
-// 		_delay_us(480-66);
-// 		if( (W1_IN & (1<<W1_PIN)) == 0 )		// short circuit
-// 		err = 1;
-
-		if(err == 32)
- 210:	80 32       	cpi	r24, 0x20	; 32
- 212:	29 f4       	brne	.+10     	; 0x21e <main+0x1c>
-{
-	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
-
-	if (level) {
-		base_add->PORTDATA
-			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
- 214:	2c 9a       	sbi	0x05, 4	; 5
-		{
-			ioport_set_pin_high(LED_ON_BOARD);
-			uputsnl("No device detected!\r\n");
- 216:	81 e1       	ldi	r24, 0x11	; 17
- 218:	92 e0       	ldi	r25, 0x02	; 2
- 21a:	ea df       	rcall	.-44     	; 0x1f0 <uputsnl>
- 21c:	12 c0       	rjmp	.+36     	; 0x242 <main+0x40>
-		}
-		else if(err == 0){
- 21e:	81 11       	cpse	r24, r1
- 220:	05 c0       	rjmp	.+10     	; 0x22c <main+0x2a>
-					(pin));
-	} else {
-		base_add->PORTDATA
-			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
- 222:	2c 98       	cbi	0x05, 4	; 5
-			ioport_set_pin_low(LED_ON_BOARD);
-			uputsnl("Device detected!\r\n");
- 224:	87 e2       	ldi	r24, 0x27	; 39
- 226:	92 e0       	ldi	r25, 0x02	; 2
- 228:	e3 df       	rcall	.-58     	; 0x1f0 <uputsnl>
- 22a:	0b c0       	rjmp	.+22     	; 0x242 <main+0x40>
-			}
-		else if(err == 1){
- 22c:	81 30       	cpi	r24, 0x01	; 1
- 22e:	29 f4       	brne	.+10     	; 0x23a <main+0x38>
-{
-	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
-
-	if (level) {
-		base_add->PORTDATA
-			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
- 230:	2c 9a       	sbi	0x05, 4	; 5
-			ioport_set_pin_high(LED_ON_BOARD);
-			uputsnl("Wire is shorted. Check connection!\r\n");
- 232:	8a e3       	ldi	r24, 0x3A	; 58
- 234:	92 e0       	ldi	r25, 0x02	; 2
- 236:	dc df       	rcall	.-72     	; 0x1f0 <uputsnl>
- 238:	04 c0       	rjmp	.+8      	; 0x242 <main+0x40>
- 23a:	2c 9a       	sbi	0x05, 4	; 5
-		}
-		else{
-			ioport_set_pin_high(LED_ON_BOARD);
-			uputsnl("Unknown error!\r\n");
- 23c:	8f e5       	ldi	r24, 0x5F	; 95
- 23e:	92 e0       	ldi	r25, 0x02	; 2
- 240:	d7 df       	rcall	.-82     	; 0x1f0 <uputsnl>
+	w1_read_rom(uid);
+ 2ac:	a6 df       	rcall	.-180    	; 0x1fa <w1_read_rom>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 242:	2f ef       	ldi	r18, 0xFF	; 255
- 244:	81 ee       	ldi	r24, 0xE1	; 225
- 246:	94 e0       	ldi	r25, 0x04	; 4
- 248:	21 50       	subi	r18, 0x01	; 1
- 24a:	80 40       	sbci	r24, 0x00	; 0
- 24c:	90 40       	sbci	r25, 0x00	; 0
- 24e:	e1 f7       	brne	.-8      	; 0x248 <main+0x46>
- 250:	00 c0       	rjmp	.+0      	; 0x252 <main+0x50>
- 252:	00 00       	nop
- 254:	2f ef       	ldi	r18, 0xFF	; 255
- 256:	81 ee       	ldi	r24, 0xE1	; 225
- 258:	94 e0       	ldi	r25, 0x04	; 4
- 25a:	21 50       	subi	r18, 0x01	; 1
- 25c:	80 40       	sbci	r24, 0x00	; 0
- 25e:	90 40       	sbci	r25, 0x00	; 0
- 260:	e1 f7       	brne	.-8      	; 0x25a <main+0x58>
- 262:	00 c0       	rjmp	.+0      	; 0x264 <main+0x62>
- 264:	00 00       	nop
- 266:	2f ef       	ldi	r18, 0xFF	; 255
- 268:	81 ee       	ldi	r24, 0xE1	; 225
- 26a:	94 e0       	ldi	r25, 0x04	; 4
- 26c:	21 50       	subi	r18, 0x01	; 1
- 26e:	80 40       	sbci	r24, 0x00	; 0
- 270:	90 40       	sbci	r25, 0x00	; 0
- 272:	e1 f7       	brne	.-8      	; 0x26c <main+0x6a>
- 274:	00 c0       	rjmp	.+0      	; 0x276 <main+0x74>
- 276:	00 00       	nop
- 278:	2f ef       	ldi	r18, 0xFF	; 255
- 27a:	81 ee       	ldi	r24, 0xE1	; 225
- 27c:	94 e0       	ldi	r25, 0x04	; 4
- 27e:	21 50       	subi	r18, 0x01	; 1
- 280:	80 40       	sbci	r24, 0x00	; 0
- 282:	90 40       	sbci	r25, 0x00	; 0
- 284:	e1 f7       	brne	.-8      	; 0x27e <main+0x7c>
- 286:	00 c0       	rjmp	.+0      	; 0x288 <main+0x86>
- 288:	00 00       	nop
- 28a:	2f ef       	ldi	r18, 0xFF	; 255
- 28c:	81 ee       	ldi	r24, 0xE1	; 225
- 28e:	94 e0       	ldi	r25, 0x04	; 4
- 290:	21 50       	subi	r18, 0x01	; 1
- 292:	80 40       	sbci	r24, 0x00	; 0
- 294:	90 40       	sbci	r25, 0x00	; 0
- 296:	e1 f7       	brne	.-8      	; 0x290 <main+0x8e>
- 298:	00 c0       	rjmp	.+0      	; 0x29a <main+0x98>
- 29a:	00 00       	nop
- 29c:	2f ef       	ldi	r18, 0xFF	; 255
- 29e:	81 ee       	ldi	r24, 0xE1	; 225
- 2a0:	94 e0       	ldi	r25, 0x04	; 4
- 2a2:	21 50       	subi	r18, 0x01	; 1
- 2a4:	80 40       	sbci	r24, 0x00	; 0
- 2a6:	90 40       	sbci	r25, 0x00	; 0
- 2a8:	e1 f7       	brne	.-8      	; 0x2a2 <main+0xa0>
- 2aa:	00 c0       	rjmp	.+0      	; 0x2ac <main+0xaa>
- 2ac:	00 00       	nop
- 2ae:	2f ef       	ldi	r18, 0xFF	; 255
- 2b0:	81 ee       	ldi	r24, 0xE1	; 225
- 2b2:	94 e0       	ldi	r25, 0x04	; 4
- 2b4:	21 50       	subi	r18, 0x01	; 1
- 2b6:	80 40       	sbci	r24, 0x00	; 0
- 2b8:	90 40       	sbci	r25, 0x00	; 0
- 2ba:	e1 f7       	brne	.-8      	; 0x2b4 <main+0xb2>
- 2bc:	00 c0       	rjmp	.+0      	; 0x2be <main+0xbc>
+ 2ae:	ff ef       	ldi	r31, 0xFF	; 255
+ 2b0:	21 ee       	ldi	r18, 0xE1	; 225
+ 2b2:	84 e0       	ldi	r24, 0x04	; 4
+ 2b4:	f1 50       	subi	r31, 0x01	; 1
+ 2b6:	20 40       	sbci	r18, 0x00	; 0
+ 2b8:	80 40       	sbci	r24, 0x00	; 0
+ 2ba:	e1 f7       	brne	.-8      	; 0x2b4 <main+0x36>
+ 2bc:	00 c0       	rjmp	.+0      	; 0x2be <main+0x40>
  2be:	00 00       	nop
- 2c0:	2f ef       	ldi	r18, 0xFF	; 255
- 2c2:	81 ee       	ldi	r24, 0xE1	; 225
- 2c4:	94 e0       	ldi	r25, 0x04	; 4
- 2c6:	21 50       	subi	r18, 0x01	; 1
- 2c8:	80 40       	sbci	r24, 0x00	; 0
- 2ca:	90 40       	sbci	r25, 0x00	; 0
- 2cc:	e1 f7       	brne	.-8      	; 0x2c6 <main+0xc4>
- 2ce:	00 c0       	rjmp	.+0      	; 0x2d0 <main+0xce>
+ 2c0:	9f ef       	ldi	r25, 0xFF	; 255
+ 2c2:	e1 ee       	ldi	r30, 0xE1	; 225
+ 2c4:	f4 e0       	ldi	r31, 0x04	; 4
+ 2c6:	91 50       	subi	r25, 0x01	; 1
+ 2c8:	e0 40       	sbci	r30, 0x00	; 0
+ 2ca:	f0 40       	sbci	r31, 0x00	; 0
+ 2cc:	e1 f7       	brne	.-8      	; 0x2c6 <main+0x48>
+ 2ce:	00 c0       	rjmp	.+0      	; 0x2d0 <main+0x52>
  2d0:	00 00       	nop
  2d2:	2f ef       	ldi	r18, 0xFF	; 255
  2d4:	81 ee       	ldi	r24, 0xE1	; 225
@@ -570,22 +512,231 @@ int main (void)
  2d8:	21 50       	subi	r18, 0x01	; 1
  2da:	80 40       	sbci	r24, 0x00	; 0
  2dc:	90 40       	sbci	r25, 0x00	; 0
- 2de:	e1 f7       	brne	.-8      	; 0x2d8 <main+0xd6>
- 2e0:	00 c0       	rjmp	.+0      	; 0x2e2 <main+0xe0>
+ 2de:	e1 f7       	brne	.-8      	; 0x2d8 <main+0x5a>
+ 2e0:	00 c0       	rjmp	.+0      	; 0x2e2 <main+0x64>
  2e2:	00 00       	nop
- 2e4:	2f ef       	ldi	r18, 0xFF	; 255
- 2e6:	81 ee       	ldi	r24, 0xE1	; 225
- 2e8:	94 e0       	ldi	r25, 0x04	; 4
- 2ea:	21 50       	subi	r18, 0x01	; 1
- 2ec:	80 40       	sbci	r24, 0x00	; 0
- 2ee:	90 40       	sbci	r25, 0x00	; 0
- 2f0:	e1 f7       	brne	.-8      	; 0x2ea <main+0xe8>
- 2f2:	00 c0       	rjmp	.+0      	; 0x2f4 <main+0xf2>
+ 2e4:	ef ef       	ldi	r30, 0xFF	; 255
+ 2e6:	f1 ee       	ldi	r31, 0xE1	; 225
+ 2e8:	24 e0       	ldi	r18, 0x04	; 4
+ 2ea:	e1 50       	subi	r30, 0x01	; 1
+ 2ec:	f0 40       	sbci	r31, 0x00	; 0
+ 2ee:	20 40       	sbci	r18, 0x00	; 0
+ 2f0:	e1 f7       	brne	.-8      	; 0x2ea <main+0x6c>
+ 2f2:	00 c0       	rjmp	.+0      	; 0x2f4 <main+0x76>
  2f4:	00 00       	nop
- 2f6:	8b cf       	rjmp	.-234    	; 0x20e <main+0xc>
+ 2f6:	8f ef       	ldi	r24, 0xFF	; 255
+ 2f8:	91 ee       	ldi	r25, 0xE1	; 225
+ 2fa:	e4 e0       	ldi	r30, 0x04	; 4
+ 2fc:	81 50       	subi	r24, 0x01	; 1
+ 2fe:	90 40       	sbci	r25, 0x00	; 0
+ 300:	e0 40       	sbci	r30, 0x00	; 0
+ 302:	e1 f7       	brne	.-8      	; 0x2fc <main+0x7e>
+ 304:	00 c0       	rjmp	.+0      	; 0x306 <main+0x88>
+ 306:	00 00       	nop
+ 308:	ff ef       	ldi	r31, 0xFF	; 255
+ 30a:	21 ee       	ldi	r18, 0xE1	; 225
+ 30c:	84 e0       	ldi	r24, 0x04	; 4
+ 30e:	f1 50       	subi	r31, 0x01	; 1
+ 310:	20 40       	sbci	r18, 0x00	; 0
+ 312:	80 40       	sbci	r24, 0x00	; 0
+ 314:	e1 f7       	brne	.-8      	; 0x30e <main+0x90>
+ 316:	00 c0       	rjmp	.+0      	; 0x318 <main+0x9a>
+ 318:	00 00       	nop
+ 31a:	9f ef       	ldi	r25, 0xFF	; 255
+ 31c:	e1 ee       	ldi	r30, 0xE1	; 225
+ 31e:	f4 e0       	ldi	r31, 0x04	; 4
+ 320:	91 50       	subi	r25, 0x01	; 1
+ 322:	e0 40       	sbci	r30, 0x00	; 0
+ 324:	f0 40       	sbci	r31, 0x00	; 0
+ 326:	e1 f7       	brne	.-8      	; 0x320 <main+0xa2>
+ 328:	00 c0       	rjmp	.+0      	; 0x32a <main+0xac>
+ 32a:	00 00       	nop
+ 32c:	2f ef       	ldi	r18, 0xFF	; 255
+ 32e:	81 ee       	ldi	r24, 0xE1	; 225
+ 330:	94 e0       	ldi	r25, 0x04	; 4
+ 332:	21 50       	subi	r18, 0x01	; 1
+ 334:	80 40       	sbci	r24, 0x00	; 0
+ 336:	90 40       	sbci	r25, 0x00	; 0
+ 338:	e1 f7       	brne	.-8      	; 0x332 <main+0xb4>
+ 33a:	00 c0       	rjmp	.+0      	; 0x33c <main+0xbe>
+ 33c:	00 00       	nop
+ 33e:	ef ef       	ldi	r30, 0xFF	; 255
+ 340:	f1 ee       	ldi	r31, 0xE1	; 225
+ 342:	24 e0       	ldi	r18, 0x04	; 4
+ 344:	e1 50       	subi	r30, 0x01	; 1
+ 346:	f0 40       	sbci	r31, 0x00	; 0
+ 348:	20 40       	sbci	r18, 0x00	; 0
+ 34a:	e1 f7       	brne	.-8      	; 0x344 <main+0xc6>
+ 34c:	00 c0       	rjmp	.+0      	; 0x34e <main+0xd0>
+ 34e:	00 00       	nop
+ 350:	8f ef       	ldi	r24, 0xFF	; 255
+ 352:	91 ee       	ldi	r25, 0xE1	; 225
+ 354:	e4 e0       	ldi	r30, 0x04	; 4
+ 356:	81 50       	subi	r24, 0x01	; 1
+ 358:	90 40       	sbci	r25, 0x00	; 0
+ 35a:	e0 40       	sbci	r30, 0x00	; 0
+ 35c:	e1 f7       	brne	.-8      	; 0x356 <main+0xd8>
+ 35e:	00 c0       	rjmp	.+0      	; 0x360 <main+0xe2>
+ 360:	00 00       	nop
+	_delay_ms(200);
 
-000002f8 <_exit>:
- 2f8:	f8 94       	cli
+	for(;;){				// main loop
 
-000002fa <__stop_program>:
- 2fa:	ff cf       	rjmp	.-2      	; 0x2fa <__stop_program>
+		bit err;
+		err = w1_reset();
+ 362:	08 df       	rcall	.-496    	; 0x174 <w1_reset>
+
+		if(err == 32)
+ 364:	80 32       	cpi	r24, 0x20	; 32
+ 366:	29 f4       	brne	.+10     	; 0x372 <main+0xf4>
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+ 368:	2c 9a       	sbi	0x05, 4	; 5
+		{
+			ioport_set_pin_high(LED_ON_BOARD);
+			uputsnl("No device detected!\r\n");
+ 36a:	81 e1       	ldi	r24, 0x11	; 17
+ 36c:	92 e0       	ldi	r25, 0x02	; 2
+ 36e:	7e df       	rcall	.-260    	; 0x26c <uputsnl>
+ 370:	12 c0       	rjmp	.+36     	; 0x396 <main+0x118>
+		}
+		else if(err == 0){
+ 372:	81 11       	cpse	r24, r1
+ 374:	05 c0       	rjmp	.+10     	; 0x380 <main+0x102>
+					(pin));
+	} else {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  & (~arch_ioport_pin_to_mask
+ 376:	2c 98       	cbi	0x05, 4	; 5
+			ioport_set_pin_low(LED_ON_BOARD);
+			uputsnl("Device detected!\r\n");
+ 378:	87 e2       	ldi	r24, 0x27	; 39
+ 37a:	92 e0       	ldi	r25, 0x02	; 2
+ 37c:	77 df       	rcall	.-274    	; 0x26c <uputsnl>
+ 37e:	0b c0       	rjmp	.+22     	; 0x396 <main+0x118>
+			}
+		else if(err == 1){
+ 380:	81 30       	cpi	r24, 0x01	; 1
+ 382:	29 f4       	brne	.+10     	; 0x38e <main+0x110>
+{
+	PORT_t *base_add = arch_ioport_port_to_base(pin >> 3);
+
+	if (level) {
+		base_add->PORTDATA
+			= (base_add->PORTDATA  | arch_ioport_pin_to_mask
+ 384:	2c 9a       	sbi	0x05, 4	; 5
+			ioport_set_pin_high(LED_ON_BOARD);
+			uputsnl("Wire is shorted. Check connection!\r\n");
+ 386:	8a e3       	ldi	r24, 0x3A	; 58
+ 388:	92 e0       	ldi	r25, 0x02	; 2
+ 38a:	70 df       	rcall	.-288    	; 0x26c <uputsnl>
+ 38c:	04 c0       	rjmp	.+8      	; 0x396 <main+0x118>
+ 38e:	2c 9a       	sbi	0x05, 4	; 5
+		}
+		else{
+			ioport_set_pin_high(LED_ON_BOARD);
+			uputsnl("Unknown error!\r\n");
+ 390:	8f e5       	ldi	r24, 0x5F	; 95
+ 392:	92 e0       	ldi	r25, 0x02	; 2
+ 394:	6b df       	rcall	.-298    	; 0x26c <uputsnl>
+ 396:	ff ef       	ldi	r31, 0xFF	; 255
+ 398:	21 ee       	ldi	r18, 0xE1	; 225
+ 39a:	84 e0       	ldi	r24, 0x04	; 4
+ 39c:	f1 50       	subi	r31, 0x01	; 1
+ 39e:	20 40       	sbci	r18, 0x00	; 0
+ 3a0:	80 40       	sbci	r24, 0x00	; 0
+ 3a2:	e1 f7       	brne	.-8      	; 0x39c <main+0x11e>
+ 3a4:	00 c0       	rjmp	.+0      	; 0x3a6 <main+0x128>
+ 3a6:	00 00       	nop
+ 3a8:	9f ef       	ldi	r25, 0xFF	; 255
+ 3aa:	e1 ee       	ldi	r30, 0xE1	; 225
+ 3ac:	f4 e0       	ldi	r31, 0x04	; 4
+ 3ae:	91 50       	subi	r25, 0x01	; 1
+ 3b0:	e0 40       	sbci	r30, 0x00	; 0
+ 3b2:	f0 40       	sbci	r31, 0x00	; 0
+ 3b4:	e1 f7       	brne	.-8      	; 0x3ae <main+0x130>
+ 3b6:	00 c0       	rjmp	.+0      	; 0x3b8 <main+0x13a>
+ 3b8:	00 00       	nop
+ 3ba:	2f ef       	ldi	r18, 0xFF	; 255
+ 3bc:	81 ee       	ldi	r24, 0xE1	; 225
+ 3be:	94 e0       	ldi	r25, 0x04	; 4
+ 3c0:	21 50       	subi	r18, 0x01	; 1
+ 3c2:	80 40       	sbci	r24, 0x00	; 0
+ 3c4:	90 40       	sbci	r25, 0x00	; 0
+ 3c6:	e1 f7       	brne	.-8      	; 0x3c0 <main+0x142>
+ 3c8:	00 c0       	rjmp	.+0      	; 0x3ca <main+0x14c>
+ 3ca:	00 00       	nop
+ 3cc:	ef ef       	ldi	r30, 0xFF	; 255
+ 3ce:	f1 ee       	ldi	r31, 0xE1	; 225
+ 3d0:	24 e0       	ldi	r18, 0x04	; 4
+ 3d2:	e1 50       	subi	r30, 0x01	; 1
+ 3d4:	f0 40       	sbci	r31, 0x00	; 0
+ 3d6:	20 40       	sbci	r18, 0x00	; 0
+ 3d8:	e1 f7       	brne	.-8      	; 0x3d2 <main+0x154>
+ 3da:	00 c0       	rjmp	.+0      	; 0x3dc <main+0x15e>
+ 3dc:	00 00       	nop
+ 3de:	8f ef       	ldi	r24, 0xFF	; 255
+ 3e0:	91 ee       	ldi	r25, 0xE1	; 225
+ 3e2:	e4 e0       	ldi	r30, 0x04	; 4
+ 3e4:	81 50       	subi	r24, 0x01	; 1
+ 3e6:	90 40       	sbci	r25, 0x00	; 0
+ 3e8:	e0 40       	sbci	r30, 0x00	; 0
+ 3ea:	e1 f7       	brne	.-8      	; 0x3e4 <main+0x166>
+ 3ec:	00 c0       	rjmp	.+0      	; 0x3ee <main+0x170>
+ 3ee:	00 00       	nop
+ 3f0:	ff ef       	ldi	r31, 0xFF	; 255
+ 3f2:	21 ee       	ldi	r18, 0xE1	; 225
+ 3f4:	84 e0       	ldi	r24, 0x04	; 4
+ 3f6:	f1 50       	subi	r31, 0x01	; 1
+ 3f8:	20 40       	sbci	r18, 0x00	; 0
+ 3fa:	80 40       	sbci	r24, 0x00	; 0
+ 3fc:	e1 f7       	brne	.-8      	; 0x3f6 <main+0x178>
+ 3fe:	00 c0       	rjmp	.+0      	; 0x400 <__FUSE_REGION_LENGTH__>
+ 400:	00 00       	nop
+ 402:	9f ef       	ldi	r25, 0xFF	; 255
+ 404:	e1 ee       	ldi	r30, 0xE1	; 225
+ 406:	f4 e0       	ldi	r31, 0x04	; 4
+ 408:	91 50       	subi	r25, 0x01	; 1
+ 40a:	e0 40       	sbci	r30, 0x00	; 0
+ 40c:	f0 40       	sbci	r31, 0x00	; 0
+ 40e:	e1 f7       	brne	.-8      	; 0x408 <__FUSE_REGION_LENGTH__+0x8>
+ 410:	00 c0       	rjmp	.+0      	; 0x412 <__FUSE_REGION_LENGTH__+0x12>
+ 412:	00 00       	nop
+ 414:	2f ef       	ldi	r18, 0xFF	; 255
+ 416:	81 ee       	ldi	r24, 0xE1	; 225
+ 418:	94 e0       	ldi	r25, 0x04	; 4
+ 41a:	21 50       	subi	r18, 0x01	; 1
+ 41c:	80 40       	sbci	r24, 0x00	; 0
+ 41e:	90 40       	sbci	r25, 0x00	; 0
+ 420:	e1 f7       	brne	.-8      	; 0x41a <__FUSE_REGION_LENGTH__+0x1a>
+ 422:	00 c0       	rjmp	.+0      	; 0x424 <__FUSE_REGION_LENGTH__+0x24>
+ 424:	00 00       	nop
+ 426:	ef ef       	ldi	r30, 0xFF	; 255
+ 428:	f1 ee       	ldi	r31, 0xE1	; 225
+ 42a:	24 e0       	ldi	r18, 0x04	; 4
+ 42c:	e1 50       	subi	r30, 0x01	; 1
+ 42e:	f0 40       	sbci	r31, 0x00	; 0
+ 430:	20 40       	sbci	r18, 0x00	; 0
+ 432:	e1 f7       	brne	.-8      	; 0x42c <__FUSE_REGION_LENGTH__+0x2c>
+ 434:	00 c0       	rjmp	.+0      	; 0x436 <__FUSE_REGION_LENGTH__+0x36>
+ 436:	00 00       	nop
+ 438:	8f ef       	ldi	r24, 0xFF	; 255
+ 43a:	91 ee       	ldi	r25, 0xE1	; 225
+ 43c:	e4 e0       	ldi	r30, 0x04	; 4
+ 43e:	81 50       	subi	r24, 0x01	; 1
+ 440:	90 40       	sbci	r25, 0x00	; 0
+ 442:	e0 40       	sbci	r30, 0x00	; 0
+ 444:	e1 f7       	brne	.-8      	; 0x43e <__FUSE_REGION_LENGTH__+0x3e>
+ 446:	00 c0       	rjmp	.+0      	; 0x448 <__FUSE_REGION_LENGTH__+0x48>
+ 448:	00 00       	nop
+ 44a:	8b cf       	rjmp	.-234    	; 0x362 <main+0xe4>
+
+0000044c <_exit>:
+ 44c:	f8 94       	cli
+
+0000044e <__stop_program>:
+ 44e:	ff cf       	rjmp	.-2      	; 0x44e <__stop_program>

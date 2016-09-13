@@ -33,6 +33,16 @@
 #define W1_OUT	PORTE
 #define W1_DDR	DDRE
 
+#define tRSTL	50
+#define tRSTH	80
+#define tMSP	8
+#define tMSR	1
+#define tW0L	8
+#define tW1L	1
+#define tRL		1
+#define tSLOT	13
+#define tREC	6
+
 #include "1wire.h"
 #include "delay.h"
 #include "tempmeas.h"

@@ -5,8 +5,9 @@
 #define	SEARCH_ROM	0xF0
 
 #define CONVERT_T	0x44		// DS28E05 commands
-#define READ		0xBE
-#define WRITE		0x4E
+#define READ		0xF0
+#define WRITE		0x55
+#define READ_ROM	0x33
 #define EE_WRITE	0x48
 #define EE_RECALL	0xB8
 
@@ -24,4 +25,6 @@ uint w1_byte_rd( void );
 uchar w1_rom_search( uchar diff, uchar idata *id );
 
 void w1_command( uchar command, uchar idata *id );
+void w1_read_rom(uint8_t *uid);
+
 #endif

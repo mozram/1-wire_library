@@ -68,12 +68,6 @@ Discarded input sections
  .text          0x00000000        0x0 src/1WIRE.o
  .data          0x00000000        0x0 src/1WIRE.o
  .bss           0x00000000        0x0 src/1WIRE.o
- .text.w1_bit_io
-                0x00000000       0x32 src/1WIRE.o
- .text.w1_byte_wr
-                0x00000000       0x24 src/1WIRE.o
- .text.w1_byte_rd
-                0x00000000        0x8 src/1WIRE.o
  .text.w1_rom_search
                 0x00000000       0xb4 src/1WIRE.o
  .text.w1_command
@@ -149,11 +143,11 @@ Discarded input sections
  .debug_macro   0x00000000       0x58 src/DELAY.o
  .debug_macro   0x00000000       0x10 src/DELAY.o
  .debug_macro   0x00000000       0xf2 src/DELAY.o
- .debug_macro   0x00000000       0x52 src/DELAY.o
- .debug_macro   0x00000000       0x52 src/DELAY.o
+ .debug_macro   0x00000000       0x88 src/DELAY.o
+ .debug_macro   0x00000000       0x58 src/DELAY.o
  .debug_macro   0x00000000       0x16 src/DELAY.o
  .debug_line    0x00000000      0x38c src/DELAY.o
- .debug_str     0x00000000    0x159a3 src/DELAY.o
+ .debug_str     0x00000000    0x15a0b src/DELAY.o
  .comment       0x00000000       0x31 src/DELAY.o
  .debug_frame   0x00000000       0x24 src/DELAY.o
  .group         0x00000000        0x8 src/TEMPMEAS.o
@@ -231,11 +225,11 @@ Discarded input sections
  .debug_macro   0x00000000       0x58 src/TEMPMEAS.o
  .debug_macro   0x00000000       0x10 src/TEMPMEAS.o
  .debug_macro   0x00000000       0xf2 src/TEMPMEAS.o
- .debug_macro   0x00000000       0x52 src/TEMPMEAS.o
- .debug_macro   0x00000000       0x52 src/TEMPMEAS.o
+ .debug_macro   0x00000000       0x88 src/TEMPMEAS.o
+ .debug_macro   0x00000000       0x58 src/TEMPMEAS.o
  .debug_macro   0x00000000       0x16 src/TEMPMEAS.o
  .debug_line    0x00000000      0x461 src/TEMPMEAS.o
- .debug_str     0x00000000    0x15a0c src/TEMPMEAS.o
+ .debug_str     0x00000000    0x15a74 src/TEMPMEAS.o
  .comment       0x00000000       0x31 src/TEMPMEAS.o
  .debug_frame   0x00000000       0x90 src/TEMPMEAS.o
  .group         0x00000000        0x8 src/TIMEBASE.o
@@ -311,11 +305,11 @@ Discarded input sections
  .debug_macro   0x00000000       0x58 src/TIMEBASE.o
  .debug_macro   0x00000000       0x10 src/TIMEBASE.o
  .debug_macro   0x00000000       0xf2 src/TIMEBASE.o
- .debug_macro   0x00000000       0x52 src/TIMEBASE.o
- .debug_macro   0x00000000       0x52 src/TIMEBASE.o
+ .debug_macro   0x00000000       0x88 src/TIMEBASE.o
+ .debug_macro   0x00000000       0x58 src/TIMEBASE.o
  .debug_macro   0x00000000       0x16 src/TIMEBASE.o
  .debug_line    0x00000000      0x3c9 src/TIMEBASE.o
- .debug_str     0x00000000    0x159ee src/TIMEBASE.o
+ .debug_str     0x00000000    0x15a56 src/TIMEBASE.o
  .comment       0x00000000       0x31 src/TIMEBASE.o
  .debug_frame   0x00000000       0x58 src/TIMEBASE.o
  COMMON         0x00000000        0x2 src/TIMEBASE.o
@@ -381,8 +375,8 @@ Discarded input sections
  .debug_macro   0x00000000       0x58 src/UART.o
  .debug_macro   0x00000000       0x10 src/UART.o
  .debug_macro   0x00000000       0xf2 src/UART.o
- .debug_macro   0x00000000       0x52 src/UART.o
- .debug_macro   0x00000000       0x52 src/UART.o
+ .debug_macro   0x00000000       0x88 src/UART.o
+ .debug_macro   0x00000000       0x58 src/UART.o
  .debug_macro   0x00000000       0x16 src/UART.o
  .group         0x00000000        0x8 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
  .group         0x00000000        0x8 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
@@ -512,8 +506,8 @@ Discarded input sections
  .debug_macro   0x00000000       0x58 src/main.o
  .debug_macro   0x00000000       0x10 src/main.o
  .debug_macro   0x00000000       0xf2 src/main.o
- .debug_macro   0x00000000       0x52 src/main.o
- .debug_macro   0x00000000       0x52 src/main.o
+ .debug_macro   0x00000000       0x88 src/main.o
+ .debug_macro   0x00000000       0x58 src/main.o
  .debug_macro   0x00000000       0x16 src/main.o
  .debug_macro   0x00000000       0x10 src/main.o
  .debug_macro   0x00000000      0x160 src/main.o
@@ -745,7 +739,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x2fc
+.text           0x00000000      0x450
  *(.vectors)
  .vectors       0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega256rfr2/avr6/crtatmega256rfr2.o
                 0x00000000                __vector_default
@@ -886,25 +880,37 @@ END GROUP
  .text.w1_reset
                 0x00000174       0x34 src/1WIRE.o
                 0x00000174                w1_reset
- .text.uinit    0x000001a8       0x1c src/UART.o
-                0x000001a8                uinit
+ .text.w1_bit_io
+                0x000001a8       0x2a src/1WIRE.o
+                0x000001a8                w1_bit_io
+ .text.w1_byte_wr
+                0x000001d2       0x22 src/1WIRE.o
+                0x000001d2                w1_byte_wr
+ .text.w1_byte_rd
+                0x000001f4        0x6 src/1WIRE.o
+                0x000001f4                w1_byte_rd
+ .text.w1_read_rom
+                0x000001fa       0x2a src/1WIRE.o
+                0x000001fa                w1_read_rom
+ .text.uinit    0x00000224       0x1c src/UART.o
+                0x00000224                uinit
  .text.uputchar
-                0x000001c4       0x10 src/UART.o
-                0x000001c4                uputchar
- .text.uputs    0x000001d4       0x1c src/UART.o
-                0x000001d4                uputs
- .text.uputsnl  0x000001f0        0x8 src/UART.o
-                0x000001f0                uputsnl
+                0x00000240       0x10 src/UART.o
+                0x00000240                uputchar
+ .text.uputs    0x00000250       0x1c src/UART.o
+                0x00000250                uputs
+ .text.uputsnl  0x0000026c        0x8 src/UART.o
+                0x0000026c                uputsnl
  .text.board_init
-                0x000001f8        0xa src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
-                0x000001f8                board_init
- .text.main     0x00000202       0xf6 src/main.o
-                0x00000202                main
-                0x000002f8                . = ALIGN (0x2)
+                0x00000274        0xa src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+                0x00000274                board_init
+ .text.main     0x0000027e      0x1ce src/main.o
+                0x0000027e                main
+                0x0000044c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000002f8        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
-                0x000002f8                _exit
-                0x000002f8                exit
+ .fini9         0x0000044c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
+                0x0000044c                _exit
+                0x0000044c                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -923,11 +929,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000002f8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
+ .fini0         0x0000044c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x000002fc                _etext = .
+                0x00000450                _etext = .
 
-.data           0x00800200       0x70 load address 0x000002fc
+.data           0x00800200       0x70 load address 0x00000450
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -946,8 +952,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00800270                PROVIDE (__bss_end, .)
-                0x000002fc                __data_load_start = LOADADDR (.data)
-                0x0000036c                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000450                __data_load_start = LOADADDR (.data)
+                0x000004c0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800270        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -1021,64 +1027,64 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0xc0
+.debug_aranges  0x00000000       0xc8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x48 src/1WIRE.o
+                0x00000000       0x50 src/1WIRE.o
  .debug_aranges
-                0x00000048       0x38 src/UART.o
+                0x00000050       0x38 src/UART.o
  .debug_aranges
-                0x00000080       0x20 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+                0x00000088       0x20 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
  .debug_aranges
-                0x000000a0       0x20 src/main.o
+                0x000000a8       0x20 src/main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xea0
+.debug_info     0x00000000     0x1200
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x428 src/1WIRE.o
- .debug_info    0x00000428      0x15e src/UART.o
- .debug_info    0x00000586      0x270 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_info    0x000007f6      0x6aa src/main.o
+ .debug_info    0x00000000      0x4e2 src/1WIRE.o
+ .debug_info    0x000004e2      0x15e src/UART.o
+ .debug_info    0x00000640      0x270 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_info    0x000008b0      0x950 src/main.o
 
-.debug_abbrev   0x00000000      0x617
+.debug_abbrev   0x00000000      0x62b
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x1bb src/1WIRE.o
- .debug_abbrev  0x000001bb       0xf6 src/UART.o
- .debug_abbrev  0x000002b1      0x140 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_abbrev  0x000003f1      0x226 src/main.o
+ .debug_abbrev  0x00000000      0x1ae src/1WIRE.o
+ .debug_abbrev  0x000001ae       0xf6 src/UART.o
+ .debug_abbrev  0x000002a4      0x140 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_abbrev  0x000003e4      0x247 src/main.o
 
-.debug_line     0x00000000     0x1449
+.debug_line     0x00000000     0x14ab
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x60e src/1WIRE.o
- .debug_line    0x0000060e      0x3f5 src/UART.o
- .debug_line    0x00000a03      0x479 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_line    0x00000e7c      0x5cd src/main.o
+ .debug_line    0x00000000      0x658 src/1WIRE.o
+ .debug_line    0x00000658      0x3f5 src/UART.o
+ .debug_line    0x00000a4d      0x479 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_line    0x00000ec6      0x5e5 src/main.o
 
-.debug_frame    0x00000000      0x170
+.debug_frame    0x00000000      0x19c
  *(.debug_frame)
- .debug_frame   0x00000000       0xc8 src/1WIRE.o
- .debug_frame   0x000000c8       0x60 src/UART.o
- .debug_frame   0x00000128       0x24 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_frame   0x0000014c       0x24 src/main.o
+ .debug_frame   0x00000000       0xe4 src/1WIRE.o
+ .debug_frame   0x000000e4       0x60 src/UART.o
+ .debug_frame   0x00000144       0x24 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_frame   0x00000168       0x34 src/main.o
 
-.debug_str      0x00000000    0x16b81
+.debug_str      0x00000000    0x16c1f
  *(.debug_str)
- .debug_str     0x00000000    0x15b91 src/1WIRE.o
-                              0x15df7 (size before relaxing)
- .debug_str     0x00015b91       0x2b src/UART.o
-                              0x159c1 (size before relaxing)
- .debug_str     0x00015bbc      0xf39 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_str     0x00000000    0x15bff src/1WIRE.o
+                              0x15e65 (size before relaxing)
+ .debug_str     0x00015bff       0x2b src/UART.o
+                              0x15a29 (size before relaxing)
+ .debug_str     0x00015c2a      0xf60 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
                               0x1617c (size before relaxing)
- .debug_str     0x00016af5       0x8c src/main.o
-                              0x16c8a (size before relaxing)
+ .debug_str     0x00016b8a       0x95 src/main.o
+                              0x16d07 (size before relaxing)
 
-.debug_loc      0x00000000      0x516
+.debug_loc      0x00000000      0x5e2
  *(.debug_loc)
- .debug_loc     0x00000000      0x3b8 src/1WIRE.o
- .debug_loc     0x000003b8       0x8a src/UART.o
- .debug_loc     0x00000442       0xd4 src/main.o
+ .debug_loc     0x00000000      0x43d src/1WIRE.o
+ .debug_loc     0x0000043d       0x8a src/UART.o
+ .debug_loc     0x000004c7      0x11b src/main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1098,14 +1104,14 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x80
+.debug_ranges   0x00000000       0x88
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x38 src/1WIRE.o
- .debug_ranges  0x00000038       0x28 src/UART.o
- .debug_ranges  0x00000060       0x10 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_ranges  0x00000070       0x10 src/main.o
+ .debug_ranges  0x00000000       0x40 src/1WIRE.o
+ .debug_ranges  0x00000040       0x28 src/UART.o
+ .debug_ranges  0x00000068       0x10 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_ranges  0x00000078       0x10 src/main.o
 
-.debug_macro    0x00000000     0x6833
+.debug_macro    0x00000000     0x686f
  *(.debug_macro)
  .debug_macro   0x00000000      0x199 src/1WIRE.o
  .debug_macro   0x00000199      0xa78 src/1WIRE.o
@@ -1136,20 +1142,20 @@ END GROUP
  .debug_macro   0x00005954       0x58 src/1WIRE.o
  .debug_macro   0x000059ac       0x10 src/1WIRE.o
  .debug_macro   0x000059bc       0xf2 src/1WIRE.o
- .debug_macro   0x00005aae       0x52 src/1WIRE.o
- .debug_macro   0x00005b00       0x52 src/1WIRE.o
- .debug_macro   0x00005b52       0x16 src/1WIRE.o
- .debug_macro   0x00005b68       0x10 src/1WIRE.o
- .debug_macro   0x00005b78      0x160 src/1WIRE.o
- .debug_macro   0x00005cd8      0x17d src/UART.o
- .debug_macro   0x00005e55      0x180 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x00005fd5      0x2a4 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x00006279       0x6e src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x000062e7       0x40 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x00006327       0x16 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x0000633d       0x34 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
- .debug_macro   0x00006371      0x1fc src/main.o
- .debug_macro   0x0000656d      0x2aa src/main.o
- .debug_macro   0x00006817       0x1c src/main.o
+ .debug_macro   0x00005aae       0x88 src/1WIRE.o
+ .debug_macro   0x00005b36       0x58 src/1WIRE.o
+ .debug_macro   0x00005b8e       0x16 src/1WIRE.o
+ .debug_macro   0x00005ba4       0x10 src/1WIRE.o
+ .debug_macro   0x00005bb4      0x160 src/1WIRE.o
+ .debug_macro   0x00005d14      0x17d src/UART.o
+ .debug_macro   0x00005e91      0x180 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x00006011      0x2a4 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x000062b5       0x6e src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x00006323       0x40 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x00006363       0x16 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x00006379       0x34 src/ASF/mega/boards/atmega256rfr2_xplained_pro/init.o
+ .debug_macro   0x000063ad      0x1fc src/main.o
+ .debug_macro   0x000065a9      0x2aa src/main.o
+ .debug_macro   0x00006853       0x1c src/main.o
 OUTPUT(OneWire.elf elf32-avr)
 LOAD linker stubs

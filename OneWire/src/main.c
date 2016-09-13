@@ -44,21 +44,26 @@ int main (void)
 	Enable_global_interrupt();
 	uputsnl( "1-Wire-Reader:\r\n" );
 
+	uint8_t uid[8] = {0};
+
+	w1_read_rom(uid);
+
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+	_delay_ms(200);
+
 	for(;;){				// main loop
 
 		bit err;
 		err = w1_reset();
-// 		W1_OUT &= ~(1<<W1_PIN);
-// 		W1_DDR |= 1<<W1_PIN;
-// 		_delay_us(50);			// 50 us
-// 		cli();
-// 		W1_DDR &= ~(1<<W1_PIN);
-// 		_delay_us(8);
-// 		err = W1_IN & (1<<W1_PIN);			// no presence detect
-// 		Enable_global_interrupt();
-// 		_delay_us(480-66);
-// 		if( (W1_IN & (1<<W1_PIN)) == 0 )		// short circuit
-// 		err = 1;
 
 		if(err == 32)
 		{
